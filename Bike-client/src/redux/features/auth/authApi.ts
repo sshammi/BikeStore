@@ -116,6 +116,7 @@ const authApi = baseApi.injectEndpoints({
           url: '/admin/all-users',
           method: 'GET',
         }),
+        providesTags:['user'],
       }),
     //get single user
         getSingleUser: builder.query({
@@ -129,8 +130,9 @@ const authApi = baseApi.injectEndpoints({
    blockUser: builder.mutation({
           query: (userId) => ({
             url: `/admin/block/${userId}`,
-            method: 'PUT',
+            method: 'PATCH',
           }),
+          invalidatesTags:['user'],
         }),
   
 
