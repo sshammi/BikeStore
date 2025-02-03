@@ -45,12 +45,21 @@ const Dashboard = () => {
             <Link to="/dashboard-admin/orders">Orders</Link>
           </li>
         </ul>
+        <button
+          onClick={handleLogout}
+          className="w-full p-2 mt-12 bg-white text-gray-800 rounded"
+        >
+          Logout
+        </button>
       </div>
 
       {/* Sidebar for Medium & Large Devices (Always Visible) */}
       <div className="hidden sm:block w-64 h-screen bg-gray-800 text-white p-4 fixed top-0 left-0 z-40">
         <h2 className="text-xl font-bold mb-6">Admin Dashboard</h2>
         <ul className="space-y-2">
+          <li className="p-2 hover:bg-gray-700 rounded cursor-pointer">
+            <Link to="/">Home</Link>
+          </li>
           <li className="p-2 hover:bg-gray-700 rounded cursor-pointer">
             <Link to="/dashboard-admin/users">Users</Link>
           </li>

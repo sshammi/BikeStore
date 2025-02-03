@@ -43,6 +43,12 @@ const CustomerDashboard = () => {
             <Link to="/dashboard-user/orders" onClick={() => setIsOpen(false)}>My Orders</Link>
           </li>
         </ul>
+        <button
+          onClick={handleLogout}
+          className="w-full p-2 mt-12 bg-white text-gray-800 rounded"
+        >
+          Logout
+        </button>
       </div>
 
       {/* Sidebar for Medium & Large Devices (Always Visible) */}
