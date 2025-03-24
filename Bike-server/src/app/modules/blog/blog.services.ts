@@ -52,10 +52,15 @@ const deleteBike = async (id: string) => {
     return deletedBike;
 };
 
+const getBikesOnFlashSale = async () => {
+    const bikesOnFlashSale = await Bike.find({ flashSale: "true" });
+    return bikesOnFlashSale;
+};
 export const BlogServices = {
     createBikeIntoDB,
     getAllBikes,
     updateBike,
     deleteBike,
-    getSingleBike // Export the new deleteBike service
+    getSingleBike,
+    getBikesOnFlashSale,
 };

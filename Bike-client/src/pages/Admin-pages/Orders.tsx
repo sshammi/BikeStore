@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { TQueryParam } from "@/types/global";
 import { Torder } from "@/types/user";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Orders = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
@@ -52,7 +53,7 @@ const Orders = () => {
   const [deleteOrder] = useDeleteOrderMutation();
 
   if (isLoading) {
-    return <div className="text-center p-6">Loading...</div>;
+    return <div className="text-center p-6"><Skeleton className="w-[100px] h-[20px] rounded-full" /></div>;
   }
 
   if (isError) {

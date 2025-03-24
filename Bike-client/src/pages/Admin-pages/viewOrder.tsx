@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useGetSingleOrderQuery, useUpdateOrderMutation } from "@/redux/features/auth/authApi";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const ViewOrder = () => {
   const { id } = useParams();
@@ -24,7 +25,7 @@ const ViewOrder = () => {
     }
   };
 
-  if (isLoading) return <div className="text-center p-6">Loading order details...</div>;
+  if (isLoading) return <div className="text-center p-6"><Skeleton className="w-[100px] h-[20px] rounded-full" /></div>;
   if (isError) return <div className="text-center text-red-500 p-6">Failed to fetch order details.</div>;
 
   return (

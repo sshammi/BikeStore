@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"; // Using ShadCN button
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useBlockUserMutation } from '@/redux/features/auth/authApi';
 import { useGetAllUsersQuery } from '@/redux/features/auth/authApi';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const Users = () => {
   const { data: usersResponse, error, isLoading } = useGetAllUsersQuery({});
@@ -11,7 +12,7 @@ const Users = () => {
   const [blockUser] = useBlockUserMutation();
   const [loadingUserId, setLoadingUserId] = useState<string | null>(null);
 
-  if (isLoading) return <p>Loading users...</p>;
+  if (isLoading) return <p><Skeleton className="w-[100px] h-[20px] rounded-full" /></p>;
   if (error) return <p>Failed to fetch users</p>;
 
   const handleDeactivate = async (userId: string) => {

@@ -67,10 +67,22 @@ const deleteBlog = catchAsync(async (req, res) => {
     });
 });
 
+const getBikesOnFlashSale = catchAsync(async (req, res) => {
+    const bikesOnFlashSale = await BlogServices.getBikesOnFlashSale();
+
+    sendResponse(res, {
+        success: true,
+        message: "Bikes on flash sale fetched successfully",
+        statusCode: StatusCodes.OK,
+        data: bikesOnFlashSale,
+    });
+});
+
 export const BlogController = {
     createBlog,
     updateBlog,
     getAllBlogs,
     deleteBlog,
-    getSingleBlogs
+    getSingleBlogs,
+    getBikesOnFlashSale,
 };

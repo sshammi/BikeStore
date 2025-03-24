@@ -21,6 +21,18 @@ import CustomerProfilePage from "@/pages/User-pages/Profile";
 import CustomerOrders from "@/pages/User-pages/showOrder";
 import { createBrowserRouter } from "react-router-dom";
 import VerifyOrder from "../pages/User-pages/VerifyOrder";
+import FilterProductsPage from "@/pages/filterPages";
+import HeroProducts from "@/pages/Admin-pages/heroSection/HeroProducts";
+import CreateHeroProduct from "@/pages/Admin-pages/heroSection/HeroAddProdcut";
+import EditHeroProductPage from "@/pages/Admin-pages/heroSection/HeroUpdateProduct";
+import HeroProductDetailsPage from "@/pages/heroProduct";
+import HeroCheckoutPage from "@/pages/User-pages/HeroCheckout";
+import CartPage from "@/pages/cart";
+import FlashProducts from "@/pages/Admin-pages/FlashProduct";
+import AdminHome from "@/pages/Admin-pages/adminHome";
+import UserHome from "@/pages/User-pages/UserHome";
+import ContactPage from "@/pages/contact";
+import AdminMessages from "@/pages/Admin-pages/Message";
 
 export const router = createBrowserRouter([
     {
@@ -44,16 +56,36 @@ export const router = createBrowserRouter([
                 element:<AllProductsPage></AllProductsPage>
             },
             {
+                path:'filterProduct',
+                element:<FilterProductsPage/>
+            },
+            {
                 path:'about',
                 element:<About></About>
+            },
+            {
+                path:'contact',
+                element:<ContactPage/>
+            },
+            {
+                path:'cart',
+                element:<CartPage/>
             },
             {
                 path:'product-details/:id',
                 element:<ProductDetailsPage></ProductDetailsPage>
             },
             {
+                path:'heroProduct-details/:id',
+                element:<HeroProductDetailsPage/>
+            },
+            {
                 path:'checkout/:id',
                 element:<ProtectedRoute role={"customer"}><CheckoutPage></CheckoutPage></ProtectedRoute>
+            },
+            {
+                path:'heroCheckout/:id',
+                element:<ProtectedRoute role={"customer"}><HeroCheckoutPage/></ProtectedRoute>
             },
             {
                 path:'payment',
@@ -73,7 +105,7 @@ export const router = createBrowserRouter([
         children:[
             {
                 path: '',
-                element: <h1 className="text-clor-gray-800">Welcome your dashboard</h1>
+                element: <AdminHome/>
             },
             {
                 path: 'users',
@@ -92,8 +124,28 @@ export const router = createBrowserRouter([
                 element:<EditProductPage></EditProductPage>
             },
             {
+                path: 'hero',
+                element:<HeroProducts/>
+            },
+            {
+                path: 'flash',
+                element:<FlashProducts/>
+            },
+            {
+                path: 'add-hero',
+                element:<CreateHeroProduct/>
+            }, 
+            {
+                path: 'edit-hero/:id',
+                element:<EditHeroProductPage/>
+            },
+            {
                 path: 'orders',
                 element:<Orders></Orders>
+            },
+            {
+                path: 'msg',
+                element:<AdminMessages/>
             },
             {
                 path: 'viewOrder/:id',
@@ -111,7 +163,7 @@ export const router = createBrowserRouter([
         children:[
             {
                 path:'',
-                element: <h1 className="text-center text-gray-800 px-11 py-6">Welcome to Dashboard</h1>
+                element: <UserHome/>
             },
             {
                 path: 'change-password',

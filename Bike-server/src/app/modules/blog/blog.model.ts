@@ -32,6 +32,10 @@ const BikePostSchema = new Schema<TBlogPost>({
     type: String,
     required: true, 
   },
+  flashSale: {
+    type:String,
+    default:"false", 
+  },
 });
 
 const Bike = model<TBlogPost>('Bike', BikePostSchema);

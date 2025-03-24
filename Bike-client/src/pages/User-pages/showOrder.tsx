@@ -5,7 +5,6 @@ import { useGetMyOrderQuery} from "@/redux/features/auth/authApi";
 
 const CustomerOrders = () => {
   const { data: orderResponse, isLoading, isError } = useGetMyOrderQuery({});
-  console.log(orderResponse);
   const orders = orderResponse?.data || [];
   if (isLoading) {
     return (

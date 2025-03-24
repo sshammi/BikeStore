@@ -33,8 +33,8 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 w-80 p-4 border rounded-lg">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 w-80 p-4 border rounded-xl bg-white">
         <h2 className="text-xl font-semibold text-center">Register</h2>
 
         <div>
@@ -67,7 +67,7 @@ const RegisterPage = () => {
          {errors.password && <span className="text-red-500 text-sm">{errors.password.message?.toString()}</span>}
         </div>
 
-        <Button type="submit" className="w-full" disabled={isLoading}>
+        <Button type="submit" className="w-full bg-[#205781] rounded-xl hover:bg-blue-700" disabled={isLoading}>
           {isLoading ? "Registering..." : "Register"}
         </Button>
       </form>

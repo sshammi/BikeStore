@@ -108,6 +108,14 @@ const authApi = baseApi.injectEndpoints({
       invalidatesTags:['demo'],
     }),
 
+    // flash a bike
+    getFlashBikes: builder.query({
+      query: () => ({
+        url: '/blogs/flash',
+        method: 'GET',
+      }),
+      providesTags:['demo'],
+    }),
    ///--------------------------------------------user section-----------------------------
 
     //get All users
@@ -214,4 +222,5 @@ export const { useLoginMutation,
   useGetSingleUserQuery,
   useGetMyOrderQuery,
   useVerifyOrderQuery,
+  useGetFlashBikesQuery,
 } = authApi;

@@ -6,7 +6,8 @@ import { toast } from "sonner"; // For notifications
 import { useNavigate, useParams } from "react-router-dom"; // For navigation and params
 import { useGetSingleBikeQuery, useUpdateBikeMutation } from "@/redux/features/auth/authApi";
 import { updateProductSchema } from "@/schema/updateProductValidationScheme";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const EditProductPage = () => {
   const { id } = useParams(); // Get the product ID from the URL
@@ -14,13 +15,16 @@ const EditProductPage = () => {
 
   // Fetch the current product details using the product ID
   const { data: product, isLoading, isError } = useGetSingleBikeQuery(id);
-  
+
   const [updateProductMutation, { isLoading: isUpdating }] = useUpdateBikeMutation();
 
   const { register, handleSubmit, formState: { errors }, setValue } = useForm({
     resolver: zodResolver(updateProductSchema), // Your Zod validation schema for editing a product
   });
-  console.log(product)
+
+  // State to handle the selected image preview
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
   // Set initial values for the form fields once the product is loaded
   useEffect(() => {
     if (product) {
@@ -30,31 +34,46 @@ const EditProductPage = () => {
       setValue("category", product.data.category);
       setValue("price", product.data.price);
       setValue("stock", product.data.stock);
+      setValue("flashSale", product.data.flashSale);
+      setValue("image", product.data.image); // Set previous image
+      setSelectedImage(product.data.image); // Set previous image preview
     }
   }, [product, setValue]);
+   
+  console.log(product);
+
+  // Handle image change
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setSelectedImage(imageUrl);
+    }
+  };
 
   // Handle form submission
   const onSubmit: SubmitErrorHandler<FieldValues> = async (data) => {
     const toastId = toast.loading("Updating product...");
     try {
       const updateData = {
-        id, // Assuming you have the product ID
+        id, // Product ID
         data: { 
           name: data.name, 
           brand: data.brand, 
           model: data.model, 
           category: data.category, 
           price: data.price, 
-          stock: data.stock 
+          stock: data.stock,
+          flashSale:data.flashSale, 
+          image: selectedImage || product?.data.image, // Update image
         },
       };
-      console.log(updateData);
       const response = await updateProductMutation(updateData).unwrap();
       toast.success("Product updated successfully!", { id: toastId });
       console.log("Product updated:", response);
 
       // Redirect to the product list page after successful update
-      navigate("/dashboard-admin/products"); // Redirect to the product list page
+      navigate("/dashboard-admin/products"); 
     } catch (error) {
       toast.error(error.data?.message || "Failed to update product", { id: toastId });
       console.error("Update product error:", error);
@@ -63,7 +82,7 @@ const EditProductPage = () => {
 
   // Handle loading or error states
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div><Skeleton className="w-[100px] h-[20px] rounded-full" /></div>;
   }
 
   if (isError) {
@@ -72,14 +91,32 @@ const EditProductPage = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 w-80 p-4 border rounded-lg">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 w-[50%] p-4 rounded-lg">
         <h2 className="text-xl font-semibold text-center">Edit Product</h2>
 
+        {/* Image Preview */}
+        {selectedImage && (
+          <div className="flex justify-center">
+            <img src={selectedImage} alt="Product" className="w-40 h-32 object-cover rounded-md" />
+          </div>
+        )}
+
+        {/* Upload Image */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Product Image</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="w-full p-2 border rounded-md"
+          />
+        </div>
+
+        {/* Product Name */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Product Name</label>
           <Input
             type="text"
-            defaultValue={product?.name} // Use defaultValue for setting current value
             placeholder="Product Name"
             {...register("name")}
             className={errors.name ? "border-red-500" : ""}
@@ -87,12 +124,12 @@ const EditProductPage = () => {
           {errors.name && <span className="text-red-500 text-sm">{errors.name.message?.toString()}</span>}
         </div>
 
+        {/* Brand */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Brand</label>
           <select
             {...register("brand")}
             className={`w-full p-2 border rounded-md ${errors.brand ? "border-red-500" : ""}`}
-            defaultValue={product?.brand} // Set the current brand as default
           >
             <option value="Honda">Honda</option>
             <option value="Yamaha">Yamaha</option>
@@ -101,12 +138,12 @@ const EditProductPage = () => {
           {errors.brand && <span className="text-red-500 text-sm">{errors.brand.message?.toString()}</span>}
         </div>
 
+        {/* Model */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Model</label>
           <select
             {...register("model")}
             className={`w-full p-2 border rounded-md ${errors.model ? "border-red-500" : ""}`}
-            defaultValue={product?.model} // Set the current model as default
           >
             <option value="Sport">Sport</option>
             <option value="Cruiser">Cruiser</option>
@@ -115,12 +152,12 @@ const EditProductPage = () => {
           {errors.model && <span className="text-red-500 text-sm">{errors.model.message?.toString()}</span>}
         </div>
 
+        {/* Category */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Category</label>
           <select
             {...register("category")}
             className={`w-full p-2 border rounded-md ${errors.category ? "border-red-500" : ""}`}
-            defaultValue={product?.category} // Set the current category as default
           >
             <option value="Superbike">Superbike</option>
             <option value="Adventure">Adventure</option>
@@ -129,11 +166,11 @@ const EditProductPage = () => {
           {errors.category && <span className="text-red-500 text-sm">{errors.category.message?.toString()}</span>}
         </div>
 
+        {/* Price */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Price</label>
           <Input
             type="text"
-            defaultValue={product?.price?.toString()} // Set the current price as default
             placeholder="Price"
             {...register("price")}
             className={errors.price ? "border-red-500" : ""}
@@ -141,11 +178,11 @@ const EditProductPage = () => {
           {errors.price && <span className="text-red-500 text-sm">{errors.price.message?.toString()}</span>}
         </div>
 
+        {/* Stock */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Stock Quantity</label>
           <Input
             type="text"
-            defaultValue={product?.stock?.toString()} // Set the current stock as default
             placeholder="Stock Quantity"
             {...register("stock")}
             className={errors.stock ? "border-red-500" : ""}
@@ -153,6 +190,21 @@ const EditProductPage = () => {
           {errors.stock && <span className="text-red-500 text-sm">{errors.stock.message?.toString()}</span>}
         </div>
 
+         {/* flashSale */}
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">False Sale</label>
+          <select
+             {...register("flashSale")}
+             className={`w-full p-2 border rounded-md ${errors.flashSale ? "border-red-500" : ""}`}
+          >
+          <option value="true">Add</option>
+          <option value="false">Remove</option>
+          </select>
+          {errors.flashSale && <span className="text-red-500 text-sm">{errors.flashSale.message?.toString()}</span>}
+        </div>
+
+        {/* Submit Button */}
         <Button type="submit" className="w-full" disabled={isUpdating}>
           {isUpdating ? "Updating..." : "Save Changes"}
         </Button>

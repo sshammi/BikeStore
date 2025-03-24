@@ -9,6 +9,7 @@ const router=express.Router();
 router.post('',auth('admin'),validateRequest(BikeValidation.BikeCreateValidationSchema),BlogController.createBlog)
 router.patch('/:id',auth('admin'),validateRequest(BikeValidation.BikeUpdateValidationSchema),BlogController.updateBlog)
 router.delete('/:id',auth('admin'),BlogController.deleteBlog)
+router.get('/flash',BlogController.getBikesOnFlashSale);
 router.get('',BlogController.getAllBlogs)
 router.get('/:id',BlogController.getSingleBlogs)
 

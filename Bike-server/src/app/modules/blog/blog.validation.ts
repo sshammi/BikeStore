@@ -9,6 +9,7 @@ const BikeCreateValidationSchema = z.object({
     model: z.enum(["Sport", "Cruiser", "Touring"], { required_error: "Model is required." }),
     category: z.enum(['Superbike', 'Adventure', 'Commuter'], { required_error: "Category is required." }),
     stock: z.string({ required_error: "Stock is required." }),
+    flashSale:z.string().default("false"),
   }),
 });
 
@@ -21,6 +22,7 @@ const BikeUpdateValidationSchema = z.object({
     model: z.enum(["Sport", "Cruiser", "Touring"]).optional(),
     category: z.enum(['Superbike', 'Adventure', 'Commuter']).optional(),
     stock: z.string().optional(),
+    flashSale:z.string().default("false").optional(),
   }),
 });
 

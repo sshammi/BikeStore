@@ -1,108 +1,112 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useGetAllBikesQuery } from "@/redux/features/auth/authApi";
-import { TQueryParam } from "@/types/global";
-import { useState } from "react";
+import { useGetAllHeroBikesQuery } from "@/redux/features/hero/heroApi";
+import { FaStar } from "react-icons/fa";
 import { Link, useNavigate } from "react-router";
-import { Cloudinary } from '@cloudinary/url-gen';
-import { AdvancedImage } from '@cloudinary/react';
+import { Skeleton } from "@/components/ui/skeleton";
+import BenefitsSection from "@/commonHome/Benefit";
+import Testimonials from "@/commonHome/Extra";
+import FlashSale from "@/commonHome/FlashSale";
+import CategorySection from "@/commonHome/Category";
+import HeroBanner from "@/commonHome/Banner";
 
 const Home = () => {
-  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [params, setParams] = useState([]);
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
+  const [ratings, setRatings] = useState<{ [key: string]: number }>({}); // Maintain ratings for each product
+
+  const handleRating = (productId: string, selectedRating: number) => {
+    setRatings((prevRatings) => ({
+      ...prevRatings,
+      [productId]: selectedRating, // Set rating for the specific product
+    }));
+  };
+
   const { data: bikesResponse, isLoading, isError } = useGetAllBikesQuery([
-    { name: 'page', value: page },
-    { name: 'sort', value: 'id' },
-    { name: 'limit', value: 6 },
+    { name: "page", value: page },
+    { name: "sort", value: "id" },
+    { name: "limit", value: 6 },
     ...params,
   ]);
 
-  if (isLoading) return <p>Loading...</p>;
+  const { data: herobikesResponse } = useGetAllHeroBikesQuery([]);
+  const heroproducts = Array.isArray(herobikesResponse?.data) ? herobikesResponse.data : [];
+
+  if (isLoading) return <p><Skeleton className="w-[100px] h-[20px] rounded-full" /></p>;
+
   if (isError) return <p>Error fetching products.</p>;
 
   const products = Array.isArray(bikesResponse?.data) ? bikesResponse.data : [];
   const handleViewDetails = (product) => {
     navigate(`/product-details/${product._id}`);
   };
-  // Select first 6 products
-  const featuredProducts = products.slice(0, 6);
-  const cld = new Cloudinary({ cloud: { cloudName: 'dlsfq2s3m' } });
-  
-  // Use this sample image or upload your own via the Media Explorer
-  const img1 = cld.image('offer1_icyr3p').format('auto').quality('auto');
-  const img2 = cld.image('offer2_jehcvs').format('auto').quality('auto');
-  const img3 = cld.image('offer3_uhetub').format('auto').quality('auto');
+
+  const featuredProducts = products.slice(0, 4); // Select first 6 products
 
   return (
-    <div className="min-h-screen flex flex-col">
-
+    <div className="min-h-screen flex flex-col m-10">
       {/* Banner */}
-      <section className="mt-[80px] p-4">
-        <h2 className="text-2xl font-bold text-center mb-6">Special Offers</h2>
-        <Carousel className="w-full h-[300px] sm:h-[350px] lg:h-[400px] flex items-center justify-center overflow-hidden relative">
-          <CarouselContent className="w-full">
-            <CarouselItem className="flex justify-center items-center">
-              <AdvancedImage cldImg={img1} className="w-full h-full object-contain sm:h-[350px] lg:h-[400px]"/>
-            </CarouselItem>
-            <CarouselItem className="flex justify-center items-center">
-              <AdvancedImage cldImg={img2} className="w-full h-full object-contain sm:h-[350px] lg:h-[400px]"/>
-            </CarouselItem>
-            <CarouselItem className="flex justify-center items-center">
-            <AdvancedImage cldImg={img3} className="w-full h-full object-contain sm:h-[350px] lg:h-[400px]"/>
-            </CarouselItem>
-          </CarouselContent>
-          <CarouselPrevious className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
-            &lt;
-          </CarouselPrevious>
-          <CarouselNext className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
-            &gt;
-          </CarouselNext>
-        </Carousel>
-      </section>
-
+      <HeroBanner/>
       {/* Featured Products */}
       <section className="p-6">
-        <h2 className="text-2xl font-bold mb-4 text-center">Featured Products</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {featuredProducts.map((product) => (
-            <Card key={product._id} className="bg-stone-100">
-              <CardContent className="p-4">
-                {/* Display image from ImageBB URL */}
-                <div className="h-30 bg-gray-300 mb-2">
-                  {product.image ? (
-                    <img
-                      src={product.image} // Assuming 'imageUrl' contains the ImageBB URL
-                      alt={product.name}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <p>No image available</p>
-                  )}
-                </div>
-                <p className="font-semibold">{product.name}</p>
-                <p className="text-sm text-gray-600">${product.price}</p>
-                <Button className="mt-2 bg-gray-800" onClick={() => handleViewDetails(product)}>View Details</Button>
-              </CardContent>
-            </Card>
-          ))}
+        <h2 className="text-4xl font-bold mb-6 text-gray-800 text-center">Featured Products</h2>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          {featuredProducts.map((product) => {
+            const productRating = ratings[product._id] || 0; // Get product's rating from the ratings state or default to 0
+            return (
+              <Card key={product._id} className=" shadow-lg rounded-xl bg-blue-50 overflow-hidden transition-transform hover:scale-105">
+  <CardContent className="p-4 flex flex-col items-center">
+    {/* Product Image */}
+    <div className="w-full h-40 bg-gray-200 rounded-md overflow-hidden mb-3">
+      {product.image ? (
+        <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+      ) : (
+        <div className="flex items-center justify-center h-full text-gray-500">No Image</div>
+      )}
+    </div>
+
+    {/* Product Name & Price */}
+    <h3 className="text-lg font-semibold text-gray-800 text-center">{product.name}</h3>
+    <p className="text-md font-medium text-blue-600 mt-1">${product.price}</p>
+
+    {/* Star Rating */}
+    <div className="flex mt-2">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <FaStar
+          key={star}
+          size={18}
+          className={`cursor-pointer ${star <= productRating ? "text-yellow-500" : "text-gray-300"}`}
+          onClick={() => handleRating(product._id, star)}
+        />
+      ))}
+    </div>
+
+    {/* View Details Button */}
+    <Button className="mt-4 bg-[#205781] text-white w-[50%] py-2 rounded-xl shadow-md hover:bg-blue-600 transition-all" onClick={() => handleViewDetails(product)}>
+      View Details
+    </Button>
+  </CardContent>
+</Card>
+
+            );
+          })}
         </div>
-        <div className="mt-4 text-center">
-          <Button asChild>
+        <div className="mt-4 text-center text-blue-700">
             <Link to="/products">View All</Link>
-          </Button>
         </div>
       </section>
+      <CategorySection/>
+      <FlashSale/>
 
       {/* Extra Section */}
-      <section className="bg-gray-100 p-6 flex flex-col items-center justify-center text-center">
-        <h2 className="text-2xl font-bold mb-4">What Our Customers Say</h2>
-        <p className="italic">"Best bike store! Excellent quality and service."</p>
-      </section>
-
-
+      
+      <Testimonials/>
+      <BenefitsSection/>
     </div>
   );
 };

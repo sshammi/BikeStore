@@ -8,6 +8,7 @@ export const updateProductSchema = z.object({
   category: z.enum(['Superbike', 'Adventure', 'Commuter']).optional(),
   price: z.string().min(1, "Price is required").optional(),
   stock: z.string().min(1, "Stock quantity is required").optional(),
+  flashSale:z.string().default("false").optional(),
 });
 
 export type UpdateProductSchemaType = z.infer<typeof updateProductSchema>;

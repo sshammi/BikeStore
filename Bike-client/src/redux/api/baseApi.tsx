@@ -22,6 +22,7 @@ const baseQuery = fetchBaseQuery({
     return headers;
   },
 })
+
 const baseQueryWithRefreshToken: BaseQueryFn<
   FetchArgs,
   BaseQueryApi,
@@ -67,6 +68,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: 'baseApi',
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes:['demo','order','user'],
+  tagTypes:['demo','order','user','hero','msg'],
   endpoints: () => ({}),
 });

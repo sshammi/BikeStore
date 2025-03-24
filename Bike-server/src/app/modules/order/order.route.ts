@@ -11,6 +11,7 @@ router.post('',auth('customer'),validateRequest(OrderValidation.OrderCreateValid
 router.get('/myOrders',auth('customer'),OrderController.getOrdersByEmail)
 
 router.get('/verify', auth('customer'), OrderController.verifyPayment);
+
 router.patch('/:id',auth('admin'),OrderController.updateOrder)
 
 router.get('/:id',auth('admin'),OrderController.getSingleOrder)

@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { TBike } from "@/types/user";
 import { TQueryParam } from "@/types/global";
+import { Skeleton } from "@/components/ui/skeleton"
 
 const Products = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
@@ -17,7 +18,7 @@ const Products = () => {
   ]);
 
   const tableData = bikesResponse?.data?.map(
-    ({ _id, name, brand, price, model, category, stock }: TBike) => ({
+    ({ _id, name, brand, price, model, category, stock ,image}: TBike) => ({
       key: _id,
       name,
       brand,
@@ -25,6 +26,7 @@ const Products = () => {
       model,
       category,
       stock,
+      image
     })
   ) || [];
 
@@ -32,7 +34,7 @@ const Products = () => {
   const [deleteBike] = useDeleteBikeMutation();
 
   if (isLoading) {
-    return <div className="text-center p-6">Loading...</div>;
+    return <div className="text-center p-6"><Skeleton className="w-[100px] h-[20px] rounded-full" /></div>;
   }
 
   if (isError) {
@@ -69,48 +71,43 @@ const Products = () => {
       </div>
 
       {/* Responsive Table Container */}
-      <div className="overflow-x-auto mt-4">
-        <Table className="min-w-full">
-          <TableHeader>
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Brand</TableHead>
-              <TableHead>Price ($)</TableHead>
-              <TableHead>Model</TableHead>
-              <TableHead>Category</TableHead>
-              <TableHead>Stock</TableHead>
-              <TableHead>Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {tableData.map((bike) => (
-              <TableRow key={bike.key} className="text-sm sm:text-base">
-                <TableCell>{bike.name}</TableCell>
-                <TableCell>{bike.brand}</TableCell>
-                <TableCell>{bike.price}</TableCell>
-                <TableCell>{bike.model}</TableCell>
-                <TableCell>{bike.category}</TableCell>
-                <TableCell>{bike.stock}</TableCell>
-                <TableCell className="flex flex-col sm:flex-row gap-2">
-                  <button
-                    className="bg-yellow-500 text-white px-3 py-1 rounded w-full sm:w-auto"
-                    onClick={() => handleEdit(bike.key)}
-                  >
-                    Edit
-                  </button>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+  {tableData.map((bike) => (
+    <div
+      key={bike.key}
+      className="border rounded-lg shadow-md p-4 flex flex-col gap-2"
+    >
+      <img
+        src={bike.image} // Make sure `bike.image` contains a valid image URL
+        alt={bike.name}
+        className="w-full h-40 object-cover rounded-md"
+      />
+      <h3 className="text-lg font-semibold">{bike.name}</h3>
+      <p className="text-gray-600">Brand: {bike.brand}</p>
+      <p className="text-gray-600">Price: ${bike.price}</p>
+      <p className="text-gray-600">Model: {bike.model}</p>
+      <p className="text-gray-600">Category: {bike.category}</p>
+      <p className="text-gray-600">Stock: {bike.stock}</p>
 
-                  <button
-                    className="bg-red-500 text-white px-3 py-1 rounded w-full sm:w-auto"
-                    onClick={() => handleDelete(bike.key)}
-                  >
-                    Delete
-                  </button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+      <div className="flex gap-2 mt-2">
+        <button
+          className="bg-yellow-500 text-white px-3 py-1 rounded w-full"
+          onClick={() => handleEdit(bike.key)}
+        >
+          Edit
+        </button>
+
+        <button
+          className="bg-red-500 text-white px-3 py-1 rounded w-full"
+          onClick={() => handleDelete(bike.key)}
+        >
+          Delete
+        </button>
       </div>
+    </div>
+  ))}
+</div>
+
     </div>
   );
 };

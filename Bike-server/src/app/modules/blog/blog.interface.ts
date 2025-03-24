@@ -7,4 +7,5 @@ export interface TBlogPost {
   model: 'Sport'|'Cruiser'|'Touring';
   category:'Superbike'|'Adventure'|'Commuter';
   stock: string;
+  flashSale:string;
 }
