@@ -13,6 +13,10 @@ import Testimonials from "@/commonHome/Extra";
 import FlashSale from "@/commonHome/FlashSale";
 import CategorySection from "@/commonHome/Category";
 import HeroBanner from "@/commonHome/Banner";
+import FeatureBikeSection from "@/commonHome/FeaturesBike";
+import BrowseBikeSection from "@/commonHome/BrowseBike";
+import TrendingBanner from "@/commonHome/TrendingBanner";
+import TrendingBikeSection from "@/commonHome/Trending";
 
 const Home = () => {
   const [params, setParams] = useState([]);
@@ -49,9 +53,13 @@ const Home = () => {
   const featuredProducts = products.slice(0, 4); // Select first 6 products
 
   return (
-    <div className="min-h-screen flex flex-col m-10">
+    <div className="min-h-screen flex flex-col">
       {/* Banner */}
       <HeroBanner/>
+      <FeatureBikeSection/>
+      <BrowseBikeSection/>
+      <TrendingBanner/>
+      <TrendingBikeSection/>
       {/* Featured Products */}
       <section className="p-6">
         <h2 className="text-4xl font-bold mb-6 text-gray-800 text-center">Featured Products</h2>

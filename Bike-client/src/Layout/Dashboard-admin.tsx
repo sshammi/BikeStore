@@ -54,10 +54,14 @@ const Dashboard = () => {
           <SidebarItem icon={<Package size={20} />} text="Products" to="/dashboard-admin/products" />
           <SidebarItem icon={<Star size={20} />} text="Hero Product" to="/dashboard-admin/hero" />
           <SidebarItem icon={<Zap size={20} />} text="Flash Product" to="/dashboard-admin/flash" />
+          <SidebarItem icon={<Zap size={20} />} text="Trending Product" to="/dashboard-admin/trending" />
+          <SidebarItem icon={<Zap size={20} />} text="Popular Product" to="/dashboard-admin/popular" />
+          <SidebarItem icon={<Zap size={20} />} text="Electric Bike" to="/dashboard-admin/electric" />
+          <SidebarItem icon={<Zap size={20} />} text="UpComming Product" to="/dashboard-admin/upcomming" />
           <SidebarItem icon={<ShoppingCart size={20} />} text="Orders" to="/dashboard-admin/orders" />
           <SidebarItem icon={< MessageCircle size={20} />} text="Messages" to="/dashboard-admin/msg" />
         </ul>
-        <button onClick={handleLogout} className="w-full p-2 mt-12 bg-white text-gray-800 flex items-center justify-center gap-2 rounded-2xl">
+        <button onClick={handleLogout} className="w-full p-2 mt-6 bg-white text-gray-800 flex items-center justify-center gap-2 rounded-2xl">
           <LogOut size={18} />
           Logout
         </button>

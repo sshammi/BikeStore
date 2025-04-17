@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#205781] text-white py-10 mt-10">
+    <footer className="bg-[#39291C] text-white py-10 mt-10">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Logo & About */}
         <div className="text-center md:text-left">
@@ -28,16 +28,16 @@ const Footer = () => {
         <div className="text-center md:text-left">
           <h3 className="text-lg font-semibold mb-3">Follow Us</h3>
           <div className="flex justify-center md:justify-start space-x-4">
-            <a href="#" className="p-2 bg-white text-[#205781] rounded-full hover:bg-gray-200 transition">
+            <a href="#" className="p-2 bg-white text-[#39291C] rounded-full hover:bg-gray-200 transition">
               <FaFacebookF size={18} />
             </a>
-            <a href="#" className="p-2 bg-white text-[#205781] rounded-full hover:bg-gray-200 transition">
+            <a href="#" className="p-2 bg-white text-[#39291C] rounded-full hover:bg-gray-200 transition">
               <FaTwitter size={18} />
             </a>
-            <a href="#" className="p-2 bg-white text-[#205781] rounded-full hover:bg-gray-200 transition">
+            <a href="#" className="p-2 bg-white text-[#39291C] rounded-full hover:bg-gray-200 transition">
               <FaInstagram size={18} />
             </a>
-            <a href="#" className="p-2 bg-white text-[#205781] rounded-full hover:bg-gray-200 transition">
+            <a href="#" className="p-2 bg-white text-[#39291C] rounded-full hover:bg-gray-200 transition">
               <FaLinkedinIn size={18} />
             </a>
           </div>

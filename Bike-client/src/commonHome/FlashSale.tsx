@@ -50,7 +50,7 @@ const FlashSale = () => {
   };
 
   return (
-    <section className="bg-red-50 p-8 rounded-lg shadow-md text-center my-8 -m-10">
+    <section className="bg-red-50 p-8 rounded-lg shadow-md text-center my-8">
       <h2 className="text-3xl font-bold text-red-600 mb-4">🔥 Flash Sale</h2>
       <p className="text-lg text-gray-700 mb-6">
         Hurry! Limited-time offers end in:{" "}

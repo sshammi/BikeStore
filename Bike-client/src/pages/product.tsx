@@ -80,7 +80,7 @@ export default function AllProductsPage() {
   return (
     <div className="p-6 flex gap-6 pt-8 min-h-screen">
       {/* Sidebar: Filters (Sticky) */}
-      <div className="w-full md:w-1/4 lg:w-1/5 h-auto md:h-screen md:sticky md:top-0 bg-white p-6 shadow-md rounded-lg">
+      <div className="w-full md:w-1/4 lg:w-1/5 h-auto md:h-screen md:sticky md:top-0 p-6 rounded-lg">
         <h2 className="text-lg font-semibold m-6">Filters</h2>
         
         {/* Search Bar */}
@@ -149,51 +149,57 @@ export default function AllProductsPage() {
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     {filteredProducts.length > 0 ? (
       filteredProducts.map((product) => (
-        <Card key={product._id} className="bg-blue-50">
-          <CardContent className="p-4 flex flex-col items-center text-center">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-40 object-cover rounded-md mb-2"
-            />
-            <h2 className="text-xl font-semibold">{product.name}</h2>
-            <p className="text-sm text-gray-500">Brand: {product.brand}</p>
-            <p className="text-sm text-gray-500">Model: {product.model}</p>
-            <p className="text-lg font-bold">${product.price}</p>
-            <p className="text-sm">Category: {product.category}</p>
-            <p
-              className={`text-sm ${
-                Number(product.stock) > 0 ? "text-green-500" : "text-red-500"
-              }`}
-            >
-              {Number(product.stock) > 0 ? "In Stock" : "Out of Stock"}
-            </p>
+        <Card key={product._id} className="overflow-hidden rounded-xl shadow-sm">
+  <CardContent className="p-0 flex flex-col items-center text-center">
+    {/* Product Image */}
+    <img
+      src={product.image}
+      alt={product.name}
+      className="w-full h-40 object-cover"
+    />
 
-            {/* Rating */}
-            <div className="flex justify-center mt-2">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <FaStar
-                  key={star}
-                  size={20}
-                  className={`cursor-pointer ${
-                    star <= (ratings[product._id] || 0)
-                      ? "text-yellow-500"
-                      : "text-gray-400"
-                  }`}
-                  onClick={() => handleRating(product._id, star)}
-                />
-              ))}
-            </div>
+    {/* Content with background */}
+    <div className="w-full bg-[#F9F9F9] px-4 py-3 flex flex-col items-center">
+      <h2 className="text-xl font-semibold">{product.name}</h2>
+      <p className="text-sm text-gray-500">Brand: {product.brand}</p>
+      <p className="text-sm text-gray-500">Model: {product.model}</p>
+      <p className="text-lg font-bold">BDT {product.price}</p>
+      <p className="text-sm">Category: {product.category}</p>
+      <p
+        className={`text-sm ${
+          Number(product.stock) > 0 ? "text-green-500" : "text-red-500"
+        }`}
+      >
+        {Number(product.stock) > 0 ? "In Stock" : "Out of Stock"}
+      </p>
 
-            {/* View Details Button */}
-            <Button
-              className="mt-2 bg-[#205781] rounded-xl hover:bg-blue-600"
-              onClick={() => handleViewDetails(product)}
-            >
-              View Details
-            </Button>
-          </CardContent>
-        </Card>
+      {/* Rating */}
+      <div className="flex justify-center mt-2">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <FaStar
+            key={star}
+            size={20}
+            className={`cursor-pointer ${
+              star <= (ratings[product._id] || 0)
+                ? "text-yellow-500"
+                : "text-gray-400"
+            }`}
+            onClick={() => handleRating(product._id, star)}
+          />
+        ))}
+      </div>
+
+      {/* View Details Button */}
+      <Button
+        className="w-2/3 border border-[#00857A] bg-white hover:bg-gray-50 text-[#00857A] my-4 rounded-xl"
+        onClick={() => handleViewDetails(product)}
+      >
+        View Details
+      </Button>
+    </div>
+  </CardContent>
+</Card>
+
       ))
     ) : (
       <p className="text-center">No products found.</p>

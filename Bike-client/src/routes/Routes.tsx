@@ -33,6 +33,19 @@ import AdminHome from "@/pages/Admin-pages/adminHome";
 import UserHome from "@/pages/User-pages/UserHome";
 import ContactPage from "@/pages/contact";
 import AdminMessages from "@/pages/Admin-pages/Message";
+import TrendingProducts from './../pages/Admin-pages/Trending';
+import PopularProducts from "@/pages/Admin-pages/Popular";
+import ElectricProducts from "@/pages/Admin-pages/ElectricProduct";
+import UpcommingProducts from "@/pages/Admin-pages/UpcommingProduct";
+import BrandPage from "@/pages/brand";
+import ModelPage from "@/pages/model";
+import TrendingBike from "@/pages/homeToNavigate/trending";
+import BudgetPage from "@/pages/budget";
+import PopularBike from "@/pages/homeToNavigate/popular";
+import UpcomingBike from "@/pages/homeToNavigate/upcoming";
+import Scooters from "@/pages/homeToNavigate/scooters";
+import Mileage from "@/pages/homeToNavigate/mileage";
+import Sports from "@/pages/homeToNavigate/sports";
 
 export const router = createBrowserRouter([
     {
@@ -72,12 +85,48 @@ export const router = createBrowserRouter([
                 element:<CartPage/>
             },
             {
+                path:'trending',
+                element:<TrendingBike/>
+            },
+            {
+                path:'popular',
+                element:<PopularBike/>
+            },
+            {
+                path:'upcoming',
+                element:<UpcomingBike/>
+            },
+            {
+                path:'scooters',
+                element:<Scooters/>
+            },
+            {
+                path:'mileage',
+                element:<Mileage/>
+            },
+            {
+                path:'sports',
+                element:<Sports/>
+            },
+            {
                 path:'product-details/:id',
                 element:<ProductDetailsPage></ProductDetailsPage>
             },
             {
                 path:'heroProduct-details/:id',
                 element:<HeroProductDetailsPage/>
+            },
+            {
+                path:'brands/:brandName',
+                element:<BrandPage/>
+            },
+            {
+                path:'models/:model',
+                element:<ModelPage/>
+            },
+            {
+                path:'/budgets/:budgetRange',
+                element:<BudgetPage/>
             },
             {
                 path:'checkout/:id',
@@ -130,6 +179,22 @@ export const router = createBrowserRouter([
             {
                 path: 'flash',
                 element:<FlashProducts/>
+            },
+            {
+                path: 'trending',
+                element:<TrendingProducts/>
+            },
+            {
+                path: 'popular',
+                element:<PopularProducts/>
+            },
+            {
+                path: 'electric',
+                element:<ElectricProducts/>
+            },
+            {
+                path: 'upcomming',
+                element:<UpcommingProducts/>
             },
             {
                 path: 'add-hero',

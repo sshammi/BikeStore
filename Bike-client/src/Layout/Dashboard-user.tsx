@@ -18,8 +18,8 @@ const CustomerDashboard = () => {
   return (
     <div className="flex min-h-screen">
       {/* Mobile Navbar */}
-      <div className="sm:hidden fixed top-0 left-0 w-full bg-gray-800 text-white p-4 z-50 flex items-center">
-        <button className="bg-gray-800 text-white p-2 rounded" onClick={() => setIsOpen(!isOpen)}>
+      <div className="sm:hidden fixed top-0 left-0 w-full bg-[#39291C] text-white p-4 z-50 flex items-center">
+        <button className="bg-[#39291C] text-white p-2 rounded" onClick={() => setIsOpen(!isOpen)}>
           <FiMenu size={24} />
         </button>
         <span className="text-xl font-bold ml-4">Customer Dashboard</span>
@@ -27,7 +27,7 @@ const CustomerDashboard = () => {
 
       {/* Sidebar (Small Screens) */}
       <div
-        className={`fixed top-0 left-0 w-64 h-screen bg-gray-800 text-white p-4 z-40 transition-transform transform ${
+        className={`fixed top-0 left-0 w-64 h-screen bg-[#39291C] text-white p-4 z-40 transition-transform transform ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         } sm:hidden`}
       >
@@ -38,7 +38,7 @@ const CustomerDashboard = () => {
         </ul>
         <button
           onClick={handleLogout}
-          className="w-full p-2 mt-12 bg-white text-gray-800 rounded flex items-center justify-center gap-2"
+          className="w-full p-2 mt-12 bg-white text-[#39291C] rounded flex items-center justify-center gap-2"
         >
           <LogOut size={18} />
           Logout
@@ -46,7 +46,7 @@ const CustomerDashboard = () => {
       </div>
 
       {/* Sidebar (Large Screens) */}
-      <div className="hidden sm:block w-64 h-screen bg-gray-800 text-white p-4 fixed top-0 left-0 z-40">
+      <div className="hidden sm:block w-64 h-screen bg-[#39291C] text-white p-4 fixed top-0 left-0 z-40">
         <h2 className="text-xl font-bold mb-6">Customer Dashboard</h2>
         <ul className="space-y-3">
           <SidebarItem icon={<Home size={20} />} text="Home" to="/" />
@@ -55,7 +55,7 @@ const CustomerDashboard = () => {
         </ul>
         <button
           onClick={handleLogout}
-          className="w-full p-2 mt-12 bg-white text-gray-800 rounded-2xl flex items-center justify-center gap-2"
+          className="w-full p-2 mt-96 bg-white text-[#39291C] rounded-xl flex items-center justify-center gap-2"
         >
           <LogOut size={18} />
           Logout

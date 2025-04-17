@@ -4,9 +4,11 @@ import Footer from '@/Shared/Footer'
 
 const Mainlayout = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div>
         <Navbar></Navbar>
+        <div className='min-h-screen'>
           <Outlet></Outlet>
+        </div>
         <Footer></Footer>
     </div>
   )

@@ -74,7 +74,7 @@ const Orders = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 sm:p-6">
+    <div className="container mx-auto p-14">
       <h2 className="text-lg sm:text-xl font-bold text-center sm:text-left">Order List</h2>
 
       {/* Responsive Table Container */}

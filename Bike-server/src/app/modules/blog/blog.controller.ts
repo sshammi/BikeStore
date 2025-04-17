@@ -77,6 +77,68 @@ const getBikesOnFlashSale = catchAsync(async (req, res) => {
         data: bikesOnFlashSale,
     });
 });
+const getBikesTrending = catchAsync(async (req, res) => {
+    const bikesOnFlashSale = await BlogServices.getBikesOnTrending();
+
+    sendResponse(res, {
+        success: true,
+        message: "Bikes on trending fetched successfully",
+        statusCode: StatusCodes.OK,
+        data: bikesOnFlashSale,
+    });
+});
+const getBikesPopular = catchAsync(async (req, res) => {
+    const bikesOnFlashSale = await BlogServices.getBikesOnPopular();
+
+    sendResponse(res, {
+        success: true,
+        message: "Bikes on popular fetched successfully",
+        statusCode: StatusCodes.OK,
+        data: bikesOnFlashSale,
+    });
+});
+const getBikesElectric = catchAsync(async (req, res) => {
+    const bikesOnFlashSale = await BlogServices.getBikesOnElectric();
+
+    sendResponse(res, {
+        success: true,
+        message: "Bikes on electric fetched successfully",
+        statusCode: StatusCodes.OK,
+        data: bikesOnFlashSale,
+    });
+});
+const getBikesUpComming = catchAsync(async (req, res) => {
+    const bikesOnFlashSale = await BlogServices.getBikesOnUpComming();
+
+    sendResponse(res, {
+        success: true,
+        message: "Bikes on upcomming fetched successfully",
+        statusCode: StatusCodes.OK,
+        data: bikesOnFlashSale,
+    });
+});
+
+const getBikesBrand = catchAsync(async (req, res) => {
+    const { brand } = req.params;
+    const bikesOnFlashSale = await BlogServices.getBikesOnBrand(brand);
+    sendResponse(res, {
+        success: true,
+        message: "Bikes on upcomming fetched successfully",
+        statusCode: StatusCodes.OK,
+        data: bikesOnFlashSale,
+    });
+});
+const getBikesModel = catchAsync(async (req, res) => {
+    const { model } = req.params;
+    console.log(model);
+    const bikesOnFlashSale = await BlogServices.getBikesOnModel(model);
+    sendResponse(res, {
+        success: true,
+        message: "Bikes on Model fetched successfully",
+        statusCode: StatusCodes.OK,
+        data: bikesOnFlashSale,
+    });
+});
 
 export const BlogController = {
     createBlog,
@@ -85,4 +147,10 @@ export const BlogController = {
     deleteBlog,
     getSingleBlogs,
     getBikesOnFlashSale,
+    getBikesTrending,
+    getBikesPopular,
+    getBikesUpComming,
+    getBikesElectric,
+    getBikesBrand,
+    getBikesModel
 };

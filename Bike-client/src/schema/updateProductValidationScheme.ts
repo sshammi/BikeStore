@@ -9,6 +9,10 @@ export const updateProductSchema = z.object({
   price: z.string().min(1, "Price is required").optional(),
   stock: z.string().min(1, "Stock quantity is required").optional(),
   flashSale:z.string().default("false").optional(),
+  trending:z.string().default('false').optional(),
+  popular:z.string().default('false').optional(),
+  electric:z.string().default('false').optional(),
+  upcoming:z.string().default('false').optional(),
 });
 
 export type UpdateProductSchemaType = z.infer<typeof updateProductSchema>;

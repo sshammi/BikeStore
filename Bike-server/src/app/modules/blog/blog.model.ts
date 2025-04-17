@@ -16,12 +16,12 @@ const BikePostSchema = new Schema<TBlogPost>({
   },
   price: {
     type: String,
-    required: true, 
+    required: true,
   },
   model: {
     type: String,
     enum: ['Sport', 'Cruiser', 'Touring'],
-    required: true, 
+    required: true,
   },
   category: {
     type: String,
@@ -30,11 +30,27 @@ const BikePostSchema = new Schema<TBlogPost>({
   },
   stock: {
     type: String,
-    required: true, 
+    required: true,
   },
   flashSale: {
-    type:String,
-    default:"false", 
+    type: String,
+    default: "false",
+  },
+  trending: {
+    type: String,
+    default: "false",
+  },
+  popular: {
+    type: String,
+    default: "false",
+  },
+  electric: {
+    type: String,
+    default: "false",
+  },
+  upcoming: {
+    type: String,
+    default: "false",
   },
 });
 

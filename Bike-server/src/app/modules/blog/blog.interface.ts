@@ -8,4 +8,8 @@ export interface TBlogPost {
   category:'Superbike'|'Adventure'|'Commuter';
   stock: string;
   flashSale:string;
+  trending:string;
+  popular:string;
+  electric:string;
+  upcoming:string;
 }

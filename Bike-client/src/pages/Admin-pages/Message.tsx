@@ -26,7 +26,7 @@ const AdminMessages = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-14">
       <h2 className="text-2xl font-bold mb-4">Messages List</h2>
       <Table>
         <TableHeader>

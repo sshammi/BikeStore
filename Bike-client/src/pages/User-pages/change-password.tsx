@@ -5,12 +5,12 @@ import { useChangePasswordMutation } from "@/redux/features/auth/authApi";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
+import { FaEnvelope, FaLock } from "react-icons/fa";
 
 const ChangePassword = () => {
   const [changePassword] = useChangePasswordMutation();
   const navigate = useNavigate();
-  
-  // Get user email from Redux state
+
   const userEmail = useSelector((state: any) => state.auth.user?.email);
 
   const [oldPassword, setOldPassword] = useState("");
@@ -25,16 +25,16 @@ const ChangePassword = () => {
     const passwordData = {
       email: userEmail,
       oldPassword,
-      newPassword
+      newPassword,
     };
-    console.log(passwordData);
+
     changePassword(passwordData)
       .unwrap()
       .then(() => {
         toast.success("Password updated successfully!");
         setOldPassword("");
         setNewPassword("");
-        navigate("/dashboard-user"); // Redirect after success
+        navigate("/dashboard-user");
       })
       .catch(() => {
         toast.error("Failed to change password.");
@@ -42,43 +42,62 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <h2 className="text-2xl font-bold text-center sm:text-left">Change Password</h2>
+    <div className="min-h-screen py-10 px-4 flex justify-center items-start">
+      <div className="bg-white w-full max-w-2xl p-8 space-y-6">
+        <h1 className="text-3xl font-bold text-center text-[#3C2A20]">Change Password</h1>
 
-      <div className="bg-white shadow-lg p-6 rounded-lg mt-6">
-        <p><strong>Email:</strong> {userEmail || "No email available"}</p>
+        <div className="space-y-4">
+          {/* Email (read-only) */}
+          <div>
+            <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
+              <FaEnvelope className="mr-2" /> Email
+            </label>
+            <input
+              type="email"
+              value={userEmail || "No email available"}
+              disabled
+              className="w-full bg-gray-100 border border-gray-300 rounded px-3 py-2"
+            />
+          </div>
 
-        {/* Password Change Form */}
-        <div className="mt-4">
-          <div className="mb-4">
-            <label className="block font-semibold">Old Password:</label>
+          {/* Old Password */}
+          <div>
+            <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
+              <FaLock className="mr-2" /> Old Password
+            </label>
             <input
               type="password"
-              className="w-full p-2 mt-2 border rounded"
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
-              required
+              placeholder="Enter old password"
+              className="w-full border border-gray-300 rounded px-3 py-2"
             />
           </div>
 
-          <div className="mb-4">
-            <label className="block font-semibold">New Password:</label>
+          {/* New Password */}
+          <div>
+            <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
+              <FaLock className="mr-2" /> New Password
+            </label>
             <input
               type="password"
-              className="w-full p-2 mt-2 border rounded"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              required
+              placeholder="Enter new password"
+              className="w-full border border-gray-300 rounded px-3 py-2"
             />
           </div>
 
-          <button
-            type="button" // Using type="button" instead of type="submit"
-            className="w-full bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
-            onClick={handleChangePassword}
-          >
-            Change
-          </button>
+          {/* Submit Button */}
+          <div className="pt-4">
+            <button
+              type="button"
+              onClick={handleChangePassword}
+              className="w-full flex items-center justify-center gap-2 bg-[#3C2A20] text-white py-2 rounded-xl hover:bg-[#5b4232] transition duration-300"
+            >
+              <FaLock /> Change Password
+            </button>
+          </div>
         </div>
       </div>
     </div>

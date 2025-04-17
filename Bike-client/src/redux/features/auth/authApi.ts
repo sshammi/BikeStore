@@ -116,6 +116,61 @@ const authApi = baseApi.injectEndpoints({
       }),
       providesTags:['demo'],
     }),
+
+    // popular bike
+    getPopularBikes: builder.query({
+      query: () => ({
+        url: '/blogs/popular',
+        method: 'GET',
+      }),
+      providesTags:['demo'],
+    }),
+
+    // electric bike
+    getElectricBikes: builder.query({
+      query: () => ({
+        url: '/blogs/electric',
+        method: 'GET',
+      }),
+      providesTags:['demo'],
+    }),
+
+    // trending
+    getTrendingBikes: builder.query({
+      query: () => ({
+        url: '/blogs/trending',
+        method: 'GET',
+      }),
+      providesTags:['demo'],
+    }),
+    
+    // Upcomming 
+    getUpcommingBikes: builder.query({
+      query: () => ({
+        url: '/blogs/upcomming',
+        method: 'GET',
+      }),
+      providesTags:['demo'],
+    }),
+
+    // get Brand
+    getBrandBikes: builder.query({
+      query: (brand:string) => ({
+        url: `/blogs/brand/${brand}`,
+        method: 'GET',
+      }),
+      providesTags:['demo'],
+    }),
+
+    // get Model
+    getModelBikes: builder.query({
+      query: (model:string) => ({
+        url: `/blogs/model/${model}`,
+        method: 'GET',
+      }),
+      providesTags:['demo'],
+    }),
+
    ///--------------------------------------------user section-----------------------------
 
     //get All users
@@ -222,5 +277,14 @@ export const { useLoginMutation,
   useGetSingleUserQuery,
   useGetMyOrderQuery,
   useVerifyOrderQuery,
+
   useGetFlashBikesQuery,
+  useGetTrendingBikesQuery,
+  useGetPopularBikesQuery,
+  useGetElectricBikesQuery,
+  useGetUpcommingBikesQuery,
+
+  useGetBrandBikesQuery,
+  useGetModelBikesQuery,
+
 } = authApi;

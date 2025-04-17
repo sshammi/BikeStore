@@ -56,6 +56,31 @@ const getBikesOnFlashSale = async () => {
     const bikesOnFlashSale = await Bike.find({ flashSale: "true" });
     return bikesOnFlashSale;
 };
+const getBikesOnTrending = async () => {
+    const bikesOnFlashSale = await Bike.find({ trending: "true" });
+    return bikesOnFlashSale;
+};
+const getBikesOnPopular = async () => {
+    const bikesOnFlashSale = await Bike.find({ popular: "true" });
+    return bikesOnFlashSale;
+};
+const getBikesOnElectric = async () => {
+    const bikesOnFlashSale = await Bike.find({ electric: "true" });
+    return bikesOnFlashSale;
+};
+const getBikesOnUpComming = async () => {
+    const bikesOnFlashSale = await Bike.find({ upcoming: "true" });
+    return bikesOnFlashSale;
+};
+const getBikesOnBrand = async (brand:string) => {
+    const bikesOnFlashSale = await Bike.find({ brand:brand });
+    return bikesOnFlashSale;
+};
+const getBikesOnModel = async (model:string) => {
+    const bikesOnFlashSale = await Bike.find({ model:model });
+    console.log(bikesOnFlashSale);
+    return bikesOnFlashSale;
+};
 export const BlogServices = {
     createBikeIntoDB,
     getAllBikes,
@@ -63,4 +88,10 @@ export const BlogServices = {
     deleteBike,
     getSingleBike,
     getBikesOnFlashSale,
+    getBikesOnTrending,
+    getBikesOnPopular,
+    getBikesOnUpComming,
+    getBikesOnElectric,
+    getBikesOnBrand,
+    getBikesOnModel,
 };

@@ -1,50 +1,92 @@
 import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";  // Adjust the import path as necessary
+import { RootState } from "@/redux/store";
 import { useNavigate } from "react-router";
-
+import { FaUser, FaEnvelope, FaPhone, FaHome, FaLock } from "react-icons/fa";
 
 const CustomerProfilePage = () => {
-  // Fetch customer data from the Redux store
   const user = useSelector((state: RootState) => state.auth.user);
-  const navigate=useNavigate();
-  // Check if user data is available
+  const navigate = useNavigate();
+
   if (!user) {
-    return <div className="text-center">No user found. Please log in.</div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+        <div className="text-center text-gray-600 text-xl">No user found. Please log in.</div>
+      </div>
+    );
   }
 
   const handleChangePassword = () => {
-    navigate('/dashboard-user/change-password')
-    console.log("Redirecting to change password page...");
+    navigate("/dashboard-user/change-password");
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen p-6">
-      <div className="bg-white shadow-lg p-6 rounded-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6">Customer Profile</h2>
+    <div className="min-h-screen py-10 px-4 flex justify-center items-start">
+      <div className="bg-white w-full max-w-2xl p-8 space-y-6">
+        <h1 className="text-3xl font-bold text-center text-[#3C2A20]">Customer Profile</h1>
 
-        {/* Customer Email */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium">Email</label>
-          <input
-            type="email"
-            value={user.email || "No Email"}
-            disabled
-            className="w-full p-2 border border-gray-300 rounded mt-1 bg-gray-100"
-          />
+        <div className="space-y-4">
+          {/* Full Name */}
+          <div>
+            <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
+              <FaUser className="mr-2" /> Full Name
+            </label>
+            <input
+              type="text"
+              value={user.name || "Nabila"}
+              disabled
+              className="w-full bg-gray-100 border border-gray-300 rounded px-3 py-2"
+            />
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
+              <FaEnvelope className="mr-2" /> Email
+            </label>
+            <input
+              type="email"
+              value={user.email || "Nabila"}
+              disabled
+              className="w-full bg-gray-100 border border-gray-300 rounded px-3 py-2"
+            />
+          </div>
+
+          {/* Phone Number */}
+          <div>
+            <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
+              <FaPhone className="mr-2" /> Phone Number
+            </label>
+            <input
+              type="text"
+              value={"01707940302"}
+              disabled
+              className="w-full bg-gray-100 border border-gray-300 rounded px-3 py-2"
+            />
+          </div>
+
+          {/* Delivery Address */}
+          <div>
+            <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
+              <FaHome className="mr-2" /> Delivery Address
+            </label>
+            <textarea
+              value={"Dhaka"}
+              disabled
+              rows={3}
+              className="w-full bg-gray-100 border border-gray-300 rounded px-3 py-2 resize-none"
+            />
+          </div>
+
+          {/* Change Password Button */}
+          <div className="pt-4">
+            <button
+              onClick={handleChangePassword}
+              className="w-full flex items-center justify-center gap-2 bg-[#3C2A20] text-white py-2 rounded-xl hover:bg-[#5b4232] transition duration-300"
+            >
+              <FaLock /> Change Password
+            </button>
+          </div>
         </div>
-
-        {/* Change Password Button */}
-        <div className="mt-6 text-center">
-          <button
-            onClick={handleChangePassword}
-            className="w-full bg-gray-800 text-white p-2 rounded hover:bg-blue-600"
-          >
-            Change Password
-          </button>
-        </div>
-
-        {/* Optional: Link to logout */}
-       
       </div>
     </div>
   );

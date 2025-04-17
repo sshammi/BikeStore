@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useGetAllBikesQuery, useDeleteBikeMutation, useGetFlashBikesQuery } from "@/redux/features/auth/authApi";
+import { useGetAllBikesQuery, useDeleteBikeMutation, useGetFlashBikesQuery, useUpdateBikeMutation } from "@/redux/features/auth/authApi";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -12,6 +12,7 @@ const FlashProducts = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
   const [page, setPage] = useState(1);
   const { data: bikesResponse, isLoading, isError } = useGetFlashBikesQuery({});
+  const [updateProductMutation, { isLoading: isUpdating }] = useUpdateBikeMutation();
 
   const tableData = bikesResponse?.data?.map(
     ({ _id, name, brand, price, model, category, stock ,image}: TBike) => ({
@@ -37,18 +38,22 @@ const FlashProducts = () => {
     return <div className="text-center text-red-500 p-6">Error fetching products</div>;
   }
 
-  const handleDelete = async (id: string) => {
-    try {
-      await deleteBike(id);
-      toast.success("Product deleted successfully!");
-    } catch (error) {
-      toast.error("Error deleting product.");
-    }
-  };
-
-  const handleEdit = (id: string) => {
-    navigate(`/dashboard-admin/edit-product/${id}`);
-  };
+  const handleEdit = async (id: string) => {
+      const confirm = window.confirm('Are you sure you want to remove this product from flashProduct?');
+      if (!confirm) return;
+      try {
+        const updateData = {
+          id,
+          data: {
+            flashSale:"false",
+          },
+        }; 
+        const response = await updateProductMutation(updateData).unwrap();
+        toast.success('FlashSale status removed');
+      } catch (error) {
+        toast.error('Failed to update FlashSale status');
+      }
+    };
 
   return (
     <div className="container mx-auto p-4 sm:p-6">
@@ -70,7 +75,7 @@ const FlashProducts = () => {
       />
       <h3 className="text-lg font-semibold">{bike.name}</h3>
       <p className="text-gray-600">Brand: {bike.brand}</p>
-      <p className="text-gray-600">Price: ${bike.price}</p>
+      <p className="text-gray-600">Price: {bike.price} BDT</p>
       <p className="text-gray-600">Model: {bike.model}</p>
       <p className="text-gray-600">Category: {bike.category}</p>
       <p className="text-gray-600">Stock: {bike.stock}</p>

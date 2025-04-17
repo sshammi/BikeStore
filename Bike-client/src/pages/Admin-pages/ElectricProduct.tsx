@@ -1,21 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useDeleteBikeMutation, useGetFlashBikesQuery, useGetTrendingBikesQuery, useGetPopularBikesQuery, useGetElectricBikesQuery, useUpdateBikeMutation } from "@/redux/features/auth/authApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useState } from "react";
 import { TBike } from "@/types/user";
 import { TQueryParam } from "@/types/global";
-import { useDeleteHeroBikeMutation, useGetAllHeroBikesQuery } from "@/redux/features/hero/heroApi";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const HeroProducts = () => {
+const ElectricProducts = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
   const [page, setPage] = useState(1);
-  const { data: bikesResponse, isLoading, isError } = useGetAllHeroBikesQuery([
-    { name: 'page', value: page },
-    { name: 'sort', value: 'id' },
-    ...params,
-  ]);
+  const { data: bikesResponse, isLoading, isError } = useGetElectricBikesQuery({});
+  const [updateProductMutation, { isLoading: isUpdating }] = useUpdateBikeMutation();
 
   const tableData = bikesResponse?.data?.map(
     ({ _id, name, brand, price, model, category, stock ,image}: TBike) => ({
@@ -31,7 +27,7 @@ const HeroProducts = () => {
   ) || [];
 
   const navigate = useNavigate();
-  const [deleteBike] = useDeleteHeroBikeMutation();
+  const [deleteBike] = useDeleteBikeMutation();
 
   if (isLoading) {
     return <div className="text-center p-6"><Skeleton className="w-[100px] h-[20px] rounded-full" /></div>;
@@ -41,38 +37,32 @@ const HeroProducts = () => {
     return <div className="text-center text-red-500 p-6">Error fetching products</div>;
   }
 
-  const handleDelete = async (id: string) => {
+  const handleEdit = async (id: string) => {
+    const confirm = window.confirm('Are you sure you want to remove this product from ElectricProduct?');
+    if (!confirm) return;
     try {
-      await deleteBike(id);
-      toast.success("Product deleted successfully!");
+      const updateData = {
+        id,
+        data: {
+          electric:"false",
+        },
+      }; 
+      const response = await updateProductMutation(updateData).unwrap();
+      toast.success('ElectricProduct status removed');
     } catch (error) {
-      toast.error("Error deleting product.");
+      toast.error('Failed to update ElectricProduct status');
     }
-  };
-
-  const handleAddProduct = () => {
-    navigate('/dashboard-admin/add-hero');
-  };
-
-  const handleEdit = (id: string) => {
-    navigate(`/dashboard-admin/edit-hero/${id}`);
   };
 
   return (
     <div className="container mx-auto p-4 sm:p-6">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <h2 className="text-lg sm:text-xl font-bold">Product List</h2>
-        <button
-          className="bg-gray-800 text-white px-4 py-2 rounded w-40"
-          onClick={handleAddProduct}
-        >
-          Add Product
-        </button>
       </div>
 
       {/* Responsive Table Container */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
-  {tableData.map((bike) => (
+     {tableData.map((bike) => (
     <div
       key={bike.key}
       className="border rounded-lg shadow-md p-4 flex flex-col gap-2"
@@ -94,14 +84,7 @@ const HeroProducts = () => {
           className="bg-yellow-500 text-white px-3 py-1 rounded w-full"
           onClick={() => handleEdit(bike.key)}
         >
-          Edit
-        </button>
-
-        <button
-          className="bg-red-500 text-white px-3 py-1 rounded w-full"
-          onClick={() => handleDelete(bike.key)}
-        >
-          Delete
+          RemoveFromElectric
         </button>
       </div>
     </div>
@@ -112,4 +95,4 @@ const HeroProducts = () => {
   );
 };
 
-export default HeroProducts;
+export default ElectricProducts;
