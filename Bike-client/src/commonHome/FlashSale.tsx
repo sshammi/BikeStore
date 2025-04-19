@@ -50,7 +50,7 @@ const FlashSale = () => {
   };
 
   return (
-    <section className="bg-red-50 p-8 rounded-lg shadow-md text-center my-8">
+    <section className=" p-8 text-center my-8">
       <h2 className="text-3xl font-bold text-red-600 mb-4">🔥 Flash Sale</h2>
       <p className="text-lg text-gray-700 mb-6">
         Hurry! Limited-time offers end in:{" "}
@@ -71,7 +71,7 @@ const FlashSale = () => {
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full h-40 object-cover rounded-lg mb-4"
+                className="w-full h-40 rounded-lg mb-4"
               />
               <h3 className="text-lg font-semibold">{product.name}</h3>
               <p className="text-gray-600 text-sm">{product.brand}</p>

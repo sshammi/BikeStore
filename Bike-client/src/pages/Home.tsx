@@ -8,10 +8,7 @@ import { useGetAllHeroBikesQuery } from "@/redux/features/hero/heroApi";
 import { FaStar } from "react-icons/fa";
 import { Link, useNavigate } from "react-router";
 import { Skeleton } from "@/components/ui/skeleton";
-import BenefitsSection from "@/commonHome/Benefit";
 import Testimonials from "@/commonHome/Extra";
-import FlashSale from "@/commonHome/FlashSale";
-import CategorySection from "@/commonHome/Category";
 import HeroBanner from "@/commonHome/Banner";
 import FeatureBikeSection from "@/commonHome/FeaturesBike";
 import BrowseBikeSection from "@/commonHome/BrowseBike";
@@ -61,16 +58,16 @@ const Home = () => {
       <TrendingBanner/>
       <TrendingBikeSection/>
       {/* Featured Products */}
-      <section className="p-6">
-        <h2 className="text-4xl font-bold mb-6 text-gray-800 text-center">Featured Products</h2>
+      <section className="p-6 mx-[15%]">
+        <h2 className="text-2xl font-bold mb-6 text-gray-800">Featured Products</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {featuredProducts.map((product) => {
             const productRating = ratings[product._id] || 0; // Get product's rating from the ratings state or default to 0
             return (
-              <Card key={product._id} className=" shadow-lg rounded-xl bg-blue-50 overflow-hidden transition-transform hover:scale-105">
+              <Card key={product._id} className=" shadow-lg rounded-xl bg-[#ECF9F8] overflow-hidden transition-transform hover:scale-105">
   <CardContent className="p-4 flex flex-col items-center">
     {/* Product Image */}
-    <div className="w-full h-40 bg-gray-200 rounded-md overflow-hidden mb-3">
+    <div className="w-full h-40 rounded-md overflow-hidden mb-3">
       {product.image ? (
         <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
       ) : (
@@ -108,13 +105,9 @@ const Home = () => {
             <Link to="/products">View All</Link>
         </div>
       </section>
-      <CategorySection/>
-      <FlashSale/>
-
       {/* Extra Section */}
       
       <Testimonials/>
-      <BenefitsSection/>
     </div>
   );
 };

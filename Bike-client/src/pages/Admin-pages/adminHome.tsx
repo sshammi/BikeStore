@@ -28,7 +28,7 @@ const AdminHome = () => {
   ];
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-16 md:p-6 space-y-6">
       {/* Cards Section */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Bikes Card */}

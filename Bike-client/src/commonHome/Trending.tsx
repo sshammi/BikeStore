@@ -142,7 +142,7 @@ export default function TrendingBikeSection() {
                 <img
                   src={bikeA.image}
                   alt={bikeA.name}
-                  className="w-24 h-24 object-cover rounded-md"
+                  className="w-32 h-24 rounded-md"
                 />
                  <div className="flex items-center justify-center h-32">
   <div className="border-l-2 border-gray-400 h-full relative">
@@ -159,12 +159,12 @@ export default function TrendingBikeSection() {
               </div>
               <div className="flex justify-between text-left">
                 <div>
-                  <p className="font-semibold">{bikeA.name}</p>
-                  <p className="text-gray-600">BDT {bikeA.price}</p>
+                  <p className="text-sm font-semibold">{bikeA.name}</p>
+                  <p className="text-sm text-gray-600">BDT {bikeA.price}</p>
                 </div>
                 <div>
-                  <p className="font-semibold">{bikeB.name}</p>
-                  <p className="text-gray-600">BDT {bikeB.price}</p>
+                  <p className="text-sm font-semibold">{bikeB.name}</p>
+                  <p className="text-sm text-gray-600">BDT {bikeB.price}</p>
                 </div>
               </div>
             </Card>
